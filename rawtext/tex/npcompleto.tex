@@ -1,0 +1,62 @@
+\section{Hitting-Set es NP-Completo}
+
+\subsection{Reducción propuesta}
+
+Vamos a reducir Vertex Cover, ya conocido como NP-Completo, al problema de Hitting-Set.
+
+Recordemos el problema de Vertex Cover: dado un grafo $G = (V, E)$ y un número $k$, ¿existe un subconjunto $S \subseteq V$
+con $|S| \leq k$ tal que toda arista de $E$ tenga al menos un extremo en $S$?
+
+La reducción que proponemos es prácticamente directa, ya que Vertex Cover no es más que un caso particular de Hitting-Set:
+
+\begin{itemize}
+    \item Definimos $A = V$ (el conjunto de elementos del Hitting-Set son los vértices del grafo).
+    \item Por cada arista $(u, v) \in E$, definimos un subconjunto $B_{(u,v)} = \{u, v\}$. Es decir, tenemos $m = |E|$
+    subconjuntos, cada uno de tamaño 2, correspondiéndose cada uno con una arista del grafo.
+    \item Usamos el mismo valor de $k$ que en la instancia de Vertex Cover.
+\end{itemize}
+
+Por ejemplo, si tenemos un grafo con aristas $(A,B)$, $(B,C)$ y $(B,D)$, la instancia de Hitting-Set generada tiene
+$A = \{A, B, C, D\}$ y los subconjuntos $B_1 = \{A, B\}$, $B_2 = \{B, C\}$, $B_3 = \{B, D\}$, con el mismo $k$.
+
+Esta reducción es claramente polinomial: por cada arista del grafo (hay $|E|$ de ellas) creamos un subconjunto de tamaño
+constante, por lo que el trabajo total es $\mathcal{O}(|E|)$.
+
+Decimos entonces que:
+
+Hay un Vertex Cover de a lo sumo $k$ vértices en el grafo $G$ $\iff$ Hay un Hitting-Set de a lo sumo $k$ elementos para la
+instancia generada.
+
+\subsection*{Hay un Vertex Cover de a lo sumo $k$ vértices en $G$ $\rightarrow$ Hay un Hitting-Set de a lo sumo $k$ elementos
+en la instancia generada}
+
+Usando el método directo, Supongamos que tenemos un Vertex Cover $S \subseteq V$ con $|S| \leq k$. Por definición de Vertex
+Cover, toda arista $(u, v) \in E$ tiene al menos uno de sus dos extremos en $S$.
+
+Tomamos ese mismo conjunto $S$ como propuesta de Hitting-Set (es decir, $C = S$). Como $|S| \leq k$, se cumple la cota de
+tamaño. Falta ver que $C$ interseca a cada $B_{(u,v)}$: por construcción, $B_{(u,v)} = \{u, v\}$, y como $S$ es Vertex Cover,
+sabemos que $u \in S$ o $v \in S$ (o ambos). Es decir, $C \cap B_{(u,v)} \neq \emptyset$ para cada arista $(u,v)$, que es
+exactamente lo que se necesita para que $C$ sea un Hitting-Set válido.
+
+Por lo tanto, si existe un Vertex Cover de a lo sumo $k$ vértices, existe un Hitting-Set de a lo sumo $k$ elementos para la
+instancia generada.
+
+\subsection*{Hay un Hitting-Set de a lo sumo $k$ elementos en la instancia generada $\rightarrow$ Hay un Vertex Cover de a lo
+sumo $k$ vértices en $G$}
+
+Nuevamente por método directo. Supongamos que tenemos un Hitting-Set $C \subseteq A$ con $|C| \leq k$, tal que
+$C \cap B_{(u,v)} \neq \emptyset$ para cada arista $(u,v) \in E$.
+
+Como $A = V$, $C$ es en particular un subconjunto de vértices del grafo original, con $|C| \leq k$. Tomamos ese mismo
+conjunto $C$ como propuesta de Vertex Cover (es decir, $S = C$).
+
+Para cada arista $(u, v) \in E$, sabemos que $C \cap \{u, v\} \neq \emptyset$ (porque $C$ es Hitting-Set para
+$B_{(u,v)} = \{u, v\}$), es decir, $u \in C$ o $v \in C$. Esto significa exactamente que la arista $(u,v)$ tiene al menos un
+extremo en $C$. Como esto vale para toda arista del grafo, $C$ cubre todas las aristas, por lo que $C$ es, en efecto, un
+Vertex Cover de a lo sumo $k$ vértices.
+
+\subsection{Conclusión}
+
+Habiendo demostrado que la reducción propuesta es correcta (y polinomial), reduciendo un problema NP-Completo (Vertex
+Cover), y demostrando en la sección anterior que Hitting-Set está en NP, podemos concluir que Hitting-Set es un problema
+NP-Completo.

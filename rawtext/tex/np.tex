@@ -1,0 +1,45 @@
+\section{Hitting-Set se encuentra en NP}
+
+\subsection{Validador}
+
+Para demostrar que el problema está en NP, proponemos un validador que, dada una instancia del problema ($A$, los $B_i$, y
+$k$) y un certificado (el conjunto $C$ propuesto), verifique en tiempo polinomial si dicho certificado es, en efecto, una
+solución válida.
+
+A: conjunto de nn elementos sobre el cual se define el problema.
+
+B: familia de mm subconjuntos B1,B2,…,BmB1​,B2​,…,Bm​, donde cada Bi⊆ABi​⊆A.
+
+k: número entero que representa la cota máxima de tamaño permitida para el conjunto solución.
+
+C: un subconjunto de A que se postula como solución al problema.
+
+\begin{lstlisting}[language=Python]
+def validadorHittingSet(A, B, k, C):
+    if len(C) > k:
+        return False
+
+    for v in C:
+        if v not in A:
+            return False
+
+    for Bi in B:
+        if len(C.intersection(set(Bi))) == 0:
+            return False
+
+    return True
+\end{lstlisting}
+
+El validador hace lo siguiente:
+\begin{itemize}
+    \item Verifica que el tamaño del conjunto propuesto no supere a $k$. Esto es $\mathcal{O}(1)$.
+    \item Verifica que todos los elementos propuestos pertenezcan efectivamente a $A$. Esto es $\mathcal{O}(k)$
+    (asumiendo que if v not in A es $\mathcal{O}(1)$ al usar sets/diccionarios).
+    \item Por cada uno de los $m$ subconjuntos $B_i$, verifica que $C$ tenga intersección no vacía con dicho subconjunto.
+    Calcular esa intersección es, en el peor caso, $\mathcal{O}(|B_i|)$. Sumando para todos los $B_i$, esto es a lo sumo
+    $\mathcal{O}(\sum_i |B_i|)$, que es, como mucho, $\mathcal{O}(m \cdot n)$ (cota burda, pero suficiente), y que en
+    cualquier caso está acotado por el tamaño de la entrada (ya que los $B_i$ forman parte de la instancia).
+\end{itemize}
+
+Es decir, el validador corre en tiempo polinomial respecto del tamaño de la entrada (que ya incluye, de por sí, a los $B_i$
+con sus respectivos elementos). Por lo tanto, Hitting-Set es un problema que se encuentra en NP.

@@ -1,0 +1,12 @@
+\section{Introducción}
+
+El problema que se nos presenta es el de \textbf{Hitting-Set}. En su versión de decisión, el problema se define como: dado un
+conjunto $A$ de $n$ elementos, $m$ subconjuntos $B_1, B_2, ..., B_m$ de $A$ (con $B_i \subseteq A$ $\forall i$), y un número
+$k$, ¿existe un subconjunto $C \subseteq A$ con $|C| \leq k$ tal que $C$ tenga al menos un elemento de cada $B_i$ (es decir,
+$C \cap B_i \neq \emptyset$ $\forall i$)?
+
+En el caso particular de Scaloni, $A$ son los jugadores convocados, cada $B_i$ representa el subconjunto de jugadores que un
+medio de prensa quiere ver en cancha, y $C$ es el conjunto de jugadores que, si juegan, alcanza para contentar (aunque sea con
+un jugador) a todos los medios.
+
+A continuación demostramos que Hitting-Set se encuentra en NP, y luego que es, en efecto, un problema NP-Completo.
